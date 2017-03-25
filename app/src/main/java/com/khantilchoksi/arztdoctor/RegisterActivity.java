@@ -267,7 +267,7 @@ public class RegisterActivity extends AppCompatActivity {
                 parameters.put("primary_mobile", mMobile);
                 parameters.put("email_id", mEmail);
                 parameters.put("password", mPassword);
-                parameters.put("acctype", "1"); //patient acctype is 1
+                parameters.put("acctype", "2"); //doctor acctype is 1
 
                 // encode parameters
                 Iterator entries = parameters.entrySet().iterator();
@@ -375,7 +375,7 @@ public class RegisterActivity extends AppCompatActivity {
                 //Set "hasLoggedIn" to true
                 editor.putBoolean(getString(R.string.pref_logged_in), true);
                 editor.putString(getString(R.string.pref_mobile_no), mMobile);
-                editor.putInt(getString(R.string.pref_patient_Id), mPatientId);
+                editor.putInt(getString(R.string.pref_doctor_Id), mPatientId);
                 editor.putString(getString(R.string.pref_full_name), mFullName);
                 // Commit the edits!
                 editor.commit();
@@ -431,14 +431,14 @@ public class RegisterActivity extends AppCompatActivity {
             final String clientEmailValid = "emailExists";
             final String clientMobileValid = "mobileExists";
             final String unknownErrorServer = "unknownError";
-            final String patientIdString = "pid";
+            final String doctorIdString = "did";
             final String fullNameString = "fullName";
 
             JSONObject clientJson = new JSONObject(clientCredStr);
             String isAccountCreated = clientJson.getString(accountCreated);
             if (isAccountCreated.contains("true")) {
                 //Account successfully created
-                mPatientId = clientJson.getInt(patientIdString);
+                mPatientId = clientJson.getInt(doctorIdString);
                 mFullName = clientJson.getString(fullNameString);
                 Log.d(LOG_TAG, "Got Patient Id : " + mPatientId +" Patient Name: "+mFullName);
                 return true;

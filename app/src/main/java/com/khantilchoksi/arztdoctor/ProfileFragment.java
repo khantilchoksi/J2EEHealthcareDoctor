@@ -38,6 +38,7 @@ import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -61,7 +62,7 @@ import java.util.Locale;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment implements GetPatientProfileTask.AsyncResponse,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class ProfileFragment extends Fragment implements MultiSelectionSpinner.OnMultipleItemsSelectedListener,GetPatientProfileTask.AsyncResponse,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -231,6 +232,11 @@ public class ProfileFragment extends Fragment implements GetPatientProfileTask.A
         GetPatientProfileTask getPatientProfileTask = new GetPatientProfileTask(getContext(),getActivity(),this,progressDialog);
         getPatientProfileTask.execute((Void) null);
 
+        //degree spinner
+        setUpDegreeSpinner();
+
+        setUpSpecialitySpinner();
+
         Button detectCurrentLocationButton = (Button) mRootView.findViewById(R.id.detect_current_location_button);
         detectCurrentLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -338,6 +344,34 @@ public class ProfileFragment extends Fragment implements GetPatientProfileTask.A
 
         });
 
+    }
+
+    private void setUpDegreeSpinner(){
+        String[] array = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
+        MultiSelectionSpinner multiSelectionSpinner = (MultiSelectionSpinner) mRootView.findViewById(R.id.degreeSpinner);
+        multiSelectionSpinner.setSpinnerTitle("Select Degrees");
+        multiSelectionSpinner.setItems(array);
+        multiSelectionSpinner.setSelection(new int[]{2, 6});
+        multiSelectionSpinner.setListener(this);
+    }
+
+    private void setUpSpecialitySpinner(){
+        String[] array = {"Ontology", "Physician", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
+        MultiSelectionSpinner multiSelectionSpinner = (MultiSelectionSpinner) mRootView.findViewById(R.id.speciality_spinner);
+        multiSelectionSpinner.setSpinnerTitle("Select Your Specialities");
+        multiSelectionSpinner.setItems(array);
+        multiSelectionSpinner.setSelection(new int[]{2, 6});
+        multiSelectionSpinner.setListener(new MultiSelectionSpinner.OnMultipleItemsSelectedListener() {
+            @Override
+            public void selectedIndices(List<Integer> indices) {
+
+            }
+
+            @Override
+            public void selectedStrings(List<String> strings) {
+                Toast.makeText(getContext(), "Heya"+strings.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     /*private void setUpCitySpinner(){
@@ -679,6 +713,15 @@ public class ProfileFragment extends Fragment implements GetPatientProfileTask.A
         }
     }
 
+    @Override
+    public void selectedIndices(List<Integer> indices) {
+
+    }
+
+    @Override
+    public void selectedStrings(List<String> strings) {
+        Toast.makeText(getContext(), strings.toString(), Toast.LENGTH_LONG).show();
+    }
 
 
     /**

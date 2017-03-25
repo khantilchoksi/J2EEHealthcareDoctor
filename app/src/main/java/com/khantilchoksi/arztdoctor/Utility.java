@@ -16,11 +16,11 @@ public class Utility {
         return (mobileNo.length() == 10 && (mobileNo.matches("[1-9][0-9]+")));
     }
 
-    public static int getPatientId(Context context){
+    public static int getDoctorId(Context context){
         SharedPreferences settings = context.getSharedPreferences(context.getResources().getString(R.string.login_pref), 0);
 
         //Get "hasLoggedIn" value. If the value doesn't exist yet false is returned
-        return settings.getInt(context.getString(R.string.pref_patient_Id), 0);
+        return settings.getInt(context.getString(R.string.pref_doctor_Id), 0);
     }
 
     public static String getPatientFullName(Context context){

@@ -87,7 +87,7 @@ public class GetPatientProfileTask extends AsyncTask<Void, Void, Boolean> {
 
             Uri.Builder builder = new Uri.Builder();
             Map<String, String> parameters = new HashMap<>();
-            parameters.put("pid", String.valueOf(Utility.getPatientId(context)));
+            parameters.put("pid", String.valueOf(Utility.getDoctorId(context)));
 
             // encode parameters
             Iterator entries = parameters.entrySet().iterator();

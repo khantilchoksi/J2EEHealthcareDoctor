@@ -260,6 +260,75 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_address" />
+
+            <com.khantilchoksi.arztdoctor.MultiSelectionSpinner
+                android:id="@+id/degreeSpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:spinnerMode="dialog" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="@color/iron" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_margin_half"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_address" />
+
+            <com.khantilchoksi.arztdoctor.MultiSelectionSpinner
+                android:id="@+id/speciality_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:spinnerMode="dialog" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="@color/iron" />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_margin_half"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_birthdate" />
 
             <!--            <DatePicker

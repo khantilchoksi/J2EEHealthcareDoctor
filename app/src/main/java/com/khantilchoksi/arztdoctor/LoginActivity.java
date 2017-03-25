@@ -363,7 +363,7 @@ public class LoginActivity extends AppCompatActivity{
 
             try {
 
-                final String CLIENT_BASE_URL = getResources().getString(R.string.base_url).concat("authenticatePatient");
+                final String CLIENT_BASE_URL = getResources().getString(R.string.base_url).concat("authenticateDoctor");
                 URL url = new URL(CLIENT_BASE_URL);
 
 
@@ -488,7 +488,7 @@ public class LoginActivity extends AppCompatActivity{
 
                 //Set "hasLoggedIn" to true
                 editor.putBoolean(getString(R.string.pref_logged_in), true);
-                editor.putInt(getString(R.string.pref_patient_Id), mPatientId);
+                editor.putInt(getString(R.string.pref_doctor_Id), mPatientId);
                 editor.putString(getString(R.string.pref_mobile_no), mMobile);
                 editor.putString(getString(R.string.pref_full_name), mFullName);
 
@@ -534,7 +534,7 @@ public class LoginActivity extends AppCompatActivity{
 
             final String isMobileRegisteredString = "isMobileRegistered";
             final String isPasswordValidString = "isPasswordValid";
-            final String patientIdString = "pid";
+            final String doctorIdString = "did";
             final String fullNameString = "fullName";
 
             JSONObject clientJson = new JSONObject(clientCredStr);
@@ -547,7 +547,7 @@ public class LoginActivity extends AppCompatActivity{
 
                 if(isValidPassword.contains("true")){
                     //Password is also valid
-                    mPatientId = clientJson.getInt(patientIdString);
+                    mPatientId = clientJson.getInt(doctorIdString);
                     mFullName = clientJson.getString(fullNameString);
                     Log.d(LOG_TAG,"Got Patient Id : "+ mPatientId+" Full Name: "+mFullName);
                     return true;

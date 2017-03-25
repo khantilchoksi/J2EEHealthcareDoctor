@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 import java.util.Arrays;
@@ -30,12 +29,12 @@ public class MultiSelectionSpinner extends android.support.v7.widget.AppCompatSp
     boolean[] mSelection = null;
     boolean[] mSelectionAtStart = null;
     String _itemsAtStart = null;
+    private String spinnerTitle;
 
     ArrayAdapter<String> simple_adapter;
 
     public MultiSelectionSpinner(Context context) {
         super(context);
-
         simple_adapter = new ArrayAdapter<>(context,
                 android.R.layout.simple_spinner_item);
         super.setAdapter(simple_adapter);
@@ -67,7 +66,7 @@ public class MultiSelectionSpinner extends android.support.v7.widget.AppCompatSp
     @Override
     public boolean performClick() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Please select!!!");
+        builder.setTitle(this.spinnerTitle);
         builder.setMultiChoiceItems(_items, mSelection, this);
         _itemsAtStart = getSelectedItemsAsString();
         builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
@@ -94,6 +93,10 @@ public class MultiSelectionSpinner extends android.support.v7.widget.AppCompatSp
     public void setAdapter(SpinnerAdapter adapter) {
         throw new RuntimeException(
                 "setAdapter is not supported by MultiSelectSpinner.");
+    }
+
+    public void setSpinnerTitle(String spinnerTitle){
+        this.spinnerTitle = spinnerTitle;
     }
 
     public void setItems(String[] items) {
