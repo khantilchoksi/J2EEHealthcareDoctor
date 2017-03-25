@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">Arzt Partner</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="name">Full Name</string>
+    <string name="prompt_mobile_no">Mobile Number</string>
+    <string name="prompt_emergency_mobile_no">Emergency Mobile Number</string>
+    <string name="prompt_gender">Gender</string>
+    <string name="prompt_blood_group">Select Blood Group</string>
+    <string name="prompt_address">Address</string>
+    <string name="prompt_pincode">Pincode</string>
+    <string name="prompt_city">City</string>
+    <string name="prompt_area">Area</string>
+    <string name="prompt_state">State</string>
+    <string name="prompt_country">Country</string>
+    <string name="prompt_birthday">Birthday</string>
+    <string name="prompt_detect_current_location">Detect My Current Location</string>
+
+    <string name="tab_doctors">Doctors</string>
+    <string name="tab_appointments">Appointments</string>
+    <string name="tab_profile">Profile</string>
+
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="button_save">Save</string>
+    <string name="no_account_yet"><u>Not a member? Register!</u></string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid.</string>
+    <string name="error_invalid_mobileNo">Enter 10-digit mobile number.</string>
+    <string name="error_invalid_password">This password is too short.</string>
+    <string name="error_invalid_name">This name is too short.</string>
+    <string name="error_incorrect_password">This password is incorrect.</string>
+    <string name="error_password_doesnot_match">Password does not match.</string>
+    <string name="error_field_required">This field is required.</string>
+    <string name="error_mobile_not_registered">This mobile number is not registered.</string>
+    <string name="error_mobile_already_registered">This mobile number is already registered.</string>
+    <string name="error_email_already_registered">This email is already registered.</string>
+    <string name="error_unknown_error">There is some issue. Please try again after some time</string>
+
+
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="base_url">https://testarzt.herokuapp.com/api/</string>
+    <string name="doc_specialtiybase_url"> https://testarzt.herokuapp.com/assets/images/specimg/</string>
+    <string name="login_pref">MyLoginPref</string>
+
+    <string name="indian_country_code">+91</string>
+    <string name="already_a_member_login"><u>Already a member? Login</u></string>
+
+
+    <string name="pref_logged_in">hasLoggedIn</string>
+    <string name="pref_patient_Id">patientId</string>
+    <string name="pref_mobile_no">mobileNo</string>
+    <string name="pref_full_name">fullName</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_my_profile">Profile</string>
+
+
+    <item name="prompt_blood_group" type="id">Choose Blood Group</item>
+    <string name="title_activity_home">Arzt</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="profile_updated">Profile Details Updated!</string>
+</resources>

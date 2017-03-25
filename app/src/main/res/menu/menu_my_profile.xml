@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.khantilchoksi.arztdoctor.MyProfileActivity">
+    <!--item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" /-->
+
+    <item
+        android:id="@+id/save_profile"
+        android:icon="@drawable/ic_save_tick"
+        android:title="@string/button_save"
+        app:showAsAction="always|withText"
+        android:orderInCategory="0"/>
+</menu>

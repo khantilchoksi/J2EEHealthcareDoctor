@@ -1,0 +1,54 @@
+Client
+http://172.24.235.78/arzt/public/api/authenticatePatient
+input: mobile: 9409033319
+	password: khantil
+return: isMobileRegistered: true or false
+	isPasswordValid: true or false
+	pid: 12365
+	fullName: Khantil Choksi
+
+--------------------------------------------------
+
+http://172.24.235.78/arzt/public/api/registerUser
+input: user_name: Khantil Choksi
+       primary_mobile: 9409033319
+       email_id: khantilchoksi@gmail.com
+       password: khantil
+       acctype: 1
+return: accountCreated: true or false
+         emailExists: true or false
+         mobileExists: true or false
+         unknownError: true or false
+         pid: 123456
+	 fullName: Khantil Choksi
+
+--------------------------------------------------
+
+http://172.24.235.78/arzt/public/api/getPatientProfileDetails
+input: pid: 123456
+return: fullName: Khantil Choksi
+	gender: 1(Male) or 2(Female) or 3(others)
+	bloodGroup: 1 to 8
+        mobileExists: true or false
+	birthdate: ddmmyyyy
+        emergencyMobileNumber: 7048150962
+	latitude: 12.1234567
+	longitude: 34.1234567
+        fullAddress: 22, blblbl, blblbl, fjlfjsd, 390001, gujarat.
+	pincode: 390022
+
+P.S. : Return blank if data is missing
+--------------------------------------------------
+
+http://172.24.235.78/arzt/public/api/setPatientProfileDetails
+input: fullName: Khantil Choksi
+	gender: 1(Male) or 2(Female) or 3(others)
+	bloodGroup: 1 to 8
+        mobileExists: true or false
+	birthdate: ddmmyyyy
+        emergencyMobileNumber: 7048150962
+	latitude: 12.1234567
+	longitude: 34.1234567
+        fullAddress: 22, blblbl, blblbl, fjlfjsd, 390001, gujarat.
+	pincode: 390022
+return: successfullyUpdated: true or false
