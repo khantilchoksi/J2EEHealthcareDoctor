@@ -23,7 +23,7 @@
     <string name="prompt_birthday">Birthday</string>
     <string name="prompt_detect_current_location">Detect My Current Location</string>
 
-    <string name="tab_doctors">Doctors</string>
+    <string name="tab_clinics">Clinics</string>
     <string name="tab_appointments">Appointments</string>
     <string name="tab_profile">Profile</string>
 
@@ -72,4 +72,5 @@
     <string name="title_activity_home">Arzt</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="profile_updated">Profile Details Updated!</string>
+    <string name="title_activity_add_existing_clinics">AddExistingClinicsActivity</string>
 </resources>

@@ -2,6 +2,7 @@ package com.khantilchoksi.arztdoctor;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,10 +17,10 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SectionsFragment#newInstance} factory method to
+ * Use the {@link ClinicsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SectionsFragment extends Fragment implements GetDoctorMainSpecialitiesTask.AsyncResponse{
+public class ClinicsFragment extends Fragment implements GetDoctorMainSpecialitiesTask.AsyncResponse{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,8 +39,14 @@ public class SectionsFragment extends Fragment implements GetDoctorMainSpecialit
 
     private ProgressDialog progressDialog;
 
-    public SectionsFragment() {
+    public ClinicsFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        initDataset();
     }
 
     /**
@@ -48,11 +55,11 @@ public class SectionsFragment extends Fragment implements GetDoctorMainSpecialit
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SectionsFragment.
+     * @return A new instance of fragment ClinicsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SectionsFragment newInstance(String param1, String param2) {
-        SectionsFragment fragment = new SectionsFragment();
+    public static ClinicsFragment newInstance(String param1, String param2) {
+        ClinicsFragment fragment = new ClinicsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,7 +75,7 @@ public class SectionsFragment extends Fragment implements GetDoctorMainSpecialit
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        initDataset();
+        //initDataset();
     }
 
     private void initDataset() {
@@ -108,7 +115,7 @@ public class SectionsFragment extends Fragment implements GetDoctorMainSpecialit
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_sections, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_clinics, container, false);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.doctor_categories_recyclerview);
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -116,7 +123,14 @@ public class SectionsFragment extends Fragment implements GetDoctorMainSpecialit
         mRecyclerView.setLayoutManager(mLayoutManager);
         //mRecyclerView.scrollToPosition(scrollPosition);
 
-
+        /*FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.add_clinic_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Add your clinic! Thanks.", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
 
         return rootView;
     }
@@ -135,4 +149,6 @@ public class SectionsFragment extends Fragment implements GetDoctorMainSpecialit
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mSpecialityAdapter);
     }
+
+
 }

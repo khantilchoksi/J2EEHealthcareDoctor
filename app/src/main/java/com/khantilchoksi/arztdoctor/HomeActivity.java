@@ -1,18 +1,20 @@
 package com.khantilchoksi.arztdoctor;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-public class HomeActivity extends AppCompatActivity  {
+public class HomeActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -28,6 +30,7 @@ public class HomeActivity extends AppCompatActivity  {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private FloatingActionButton mClinicFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +51,43 @@ public class HomeActivity extends AppCompatActivity  {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        mViewPager.setCurrentItem(3);
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mClinicFab = (FloatingActionButton) findViewById(R.id.add_clinic_fab);
+        mClinicFab.setVisibility(View.INVISIBLE);
+        mClinicFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+
+                Intent clinicsActivity = new Intent(HomeActivity.this ,AddExistingClinicsActivity.class);
+                startActivity(clinicsActivity);
             }
-        });*/
+        });
+
+        //mViewPager.setCurrentItem(2);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 1){
+                    mClinicFab.setVisibility(View.VISIBLE);
+                }else{
+                    mClinicFab.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
 
     }
 
@@ -135,13 +165,17 @@ public class HomeActivity extends AppCompatActivity  {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    // Top Rated fragment activity
-                    return new SectionsFragment();
-                case 1:
-                    // Games fragment activity
+                    // Appointments fragment
+                    //mClinicFab.setVisibility(View.INVISIBLE);
                     return new AppointmentsFragment();
+                case 1:
+                    // Clinics fragment
+                    //mClinicFab.setVisibility(View.VISIBLE);
+                    return new ClinicsFragment();
+
                 case 2:
                     // Movies fragment activity
+                    //mClinicFab.setVisibility(View.INVISIBLE);
                     return new PersonalFragment();
             }
 
@@ -158,9 +192,10 @@ public class HomeActivity extends AppCompatActivity  {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getResources().getString(R.string.tab_doctors);
-                case 1:
                     return getResources().getString(R.string.tab_appointments);
+                case 1:
+                    return getResources().getString(R.string.tab_clinics);
+
                 case 2:
                     return getResources().getString(R.string.tab_profile);
             }
