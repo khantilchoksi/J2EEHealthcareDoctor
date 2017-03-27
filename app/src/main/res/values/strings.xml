@@ -73,4 +73,5 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="profile_updated">Profile Details Updated!</string>
     <string name="title_activity_add_existing_clinics">AddExistingClinicsActivity</string>
+    <string name="error_invalid_pincode">Please enter valid pincode.</string>
 </resources>

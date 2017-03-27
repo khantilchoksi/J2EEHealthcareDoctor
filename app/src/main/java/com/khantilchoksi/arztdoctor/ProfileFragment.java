@@ -237,6 +237,8 @@ public class ProfileFragment extends Fragment implements MultiSelectionSpinner.O
 
         setUpSpecialitySpinner();
 
+        buildGoogleApiClient();
+
         Button detectCurrentLocationButton = (Button) mRootView.findViewById(R.id.detect_current_location_button);
         detectCurrentLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,7 +249,7 @@ public class ProfileFragment extends Fragment implements MultiSelectionSpinner.O
             }
         });
 
-        buildGoogleApiClient();
+
 
         mSaveButton = (Button) mRootView.findViewById(R.id.btn_save);
         mSaveButton.setOnClickListener(new View.OnClickListener() {
