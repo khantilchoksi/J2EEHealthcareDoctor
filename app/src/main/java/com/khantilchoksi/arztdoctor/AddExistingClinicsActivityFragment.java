@@ -1,5 +1,6 @@
 package com.khantilchoksi.arztdoctor;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -7,13 +8,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class AddExistingClinicsActivityFragment extends Fragment implements Goog
     private Button mGetCurrentLocationButton;
     private Button mSearchButton;
     private EditText mPinCodeEditText;
+    private ProgressDialog progressDialog;
     private int mPincode;
     private double mLatitude = 0;
     private double mLongitude = 0;
@@ -69,7 +71,7 @@ public class AddExistingClinicsActivityFragment extends Fragment implements Goog
             }
         });
 
-        mSearchButton = (Button) mRootView.findViewById(R.id.btn_save);
+        mSearchButton = (Button) mRootView.findViewById(R.id.search_clinic);
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
