@@ -82,7 +82,9 @@
     <string name="title_activity_add_clinic_time_slots">AddClinicTimeSlotsActivity</string>
     <string name="bundle_clinic_id">bundleClinicId</string>
     <string name="bundle_clinic_name">bundleClinicName</string>
-    <string name="prompt_consultation_charges">Concultation Fees</string>
+    <string name="prompt_consultation_charges">Consultation Fees</string>
     <string name="error_invlaid_fees">Invalid fees.</string>
     <string name="error_add_atleast_one_slot">Please enter at least one slot.</string>
+
+    <string name="rupee_symbol">\u20B9</string>
 </resources>

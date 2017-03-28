@@ -31,7 +31,7 @@ public class ClinicsFragment extends Fragment implements GetDoctorMainSpecialiti
     private String mParam2;
 
     private RecyclerView mRecyclerView;
-    private SpecilaityAdapter mSpecialityAdapter;
+    private ClinicRecyclerAdapter mSpecialityAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<String> specialityNamesList;
     private ArrayList<String> specialityDescriptionList;
@@ -117,7 +117,7 @@ public class ClinicsFragment extends Fragment implements GetDoctorMainSpecialiti
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_clinics, container, false);
 
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.doctor_categories_recyclerview);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.clinics_recyclerview);
         mLayoutManager = new LinearLayoutManager(getActivity());
 
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -145,7 +145,7 @@ public class ClinicsFragment extends Fragment implements GetDoctorMainSpecialiti
         this.specialityIconUrlList = specialityIconUrlList;
         progressDialog.dismiss();
 
-        mSpecialityAdapter = new SpecilaityAdapter(this.specialityNamesList,this.specialityDescriptionList, this.specialityIconUrlList);
+        mSpecialityAdapter = new ClinicRecyclerAdapter(this.specialityNamesList,this.specialityDescriptionList, this.specialityIconUrlList);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mSpecialityAdapter);
     }
