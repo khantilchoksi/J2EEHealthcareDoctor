@@ -22,6 +22,9 @@
     <string name="prompt_country">Country</string>
     <string name="prompt_birthday">Birthday</string>
     <string name="prompt_detect_current_location">Detect My Current Location</string>
+    <string name="prompt_select_slot_day">Select Day</string>
+
+    <string name="intent_extra_pincode">pincodeExtra</string>
 
     <string name="tab_clinics">Clinics</string>
     <string name="tab_appointments">Appointments</string>
@@ -42,7 +45,7 @@
     <string name="error_mobile_not_registered">This mobile number is not registered.</string>
     <string name="error_mobile_already_registered">This mobile number is already registered.</string>
     <string name="error_email_already_registered">This email is already registered.</string>
-    <string name="error_unknown_error">There is some issue. Please try again after some time</string>
+    <string name="error_unknown_error">There is some issue. Please try again after some time.</string>
     <string name="no_clinics_available">No clinics available.</string>
 
     <string name="permission_rationale">"Contacts permissions are needed for providing email
@@ -75,4 +78,11 @@
     <string name="title_activity_add_existing_clinics">AddExistingClinicsActivity</string>
     <string name="error_invalid_pincode">Please enter valid pincode.</string>
     <string name="title_activity_show_clinics">ShowClinicsActivity</string>
+    <string name="request_to_add_clinic">Add Your Own New Clinic!</string>
+    <string name="title_activity_add_clinic_time_slots">AddClinicTimeSlotsActivity</string>
+    <string name="bundle_clinic_id">bundleClinicId</string>
+    <string name="bundle_clinic_name">bundleClinicName</string>
+    <string name="prompt_consultation_charges">Concultation Fees</string>
+    <string name="error_invlaid_fees">Invalid fees.</string>
+    <string name="error_add_atleast_one_slot">Please enter at least one slot.</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.khantilchoksi.arztdoctor;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -40,10 +39,10 @@ public class AddExistingClinicsActivityFragment extends Fragment implements Goog
     private Location mLastLocation;
     private final String LOG_TAG = getClass().getSimpleName();
     private View mRootView;
-    private Button mGetCurrentLocationButton;
+
     private Button mSearchButton;
     private EditText mPinCodeEditText;
-    private ProgressDialog progressDialog;
+
     private int mPincode;
     private double mLatitude = 0;
     private double mLongitude = 0;
@@ -100,17 +99,11 @@ public class AddExistingClinicsActivityFragment extends Fragment implements Goog
             focusView.requestFocus();
 
         }else{
-            /*
-        progressDialog = new ProgressDialog(getActivity(),
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Saving Profile Info...");
-        progressDialog.show();
 
-        SavePatientProfileTask savePatientProfileTask = new SavePatientProfileTask(getContext(), getActivity(),
-                fullName,gender,bloodGroup,birthdate,emergencyMobileNumber,
-                String.valueOf(mLatitude),String.valueOf(mLongitude),fullAddress,mPinCode,progressDialog);
-        savePatientProfileTask.execute((Void) null);*/
+            Intent clinicsIntent = new Intent(getActivity(),ShowClinicsActivity.class);
+            clinicsIntent.putExtra(getContext().getResources().getString(R.string.intent_extra_pincode),mPincode);
+            getActivity().startActivity(clinicsIntent);
+
         }
 
 

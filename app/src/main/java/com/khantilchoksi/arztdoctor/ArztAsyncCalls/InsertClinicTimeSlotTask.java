@@ -3,15 +3,17 @@ package com.khantilchoksi.arztdoctor.ArztAsyncCalls;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.khantilchoksi.arztdoctor.Clinic;
+import com.khantilchoksi.arztdoctor.HomeActivity;
 import com.khantilchoksi.arztdoctor.R;
+import com.khantilchoksi.arztdoctor.Slot;
+import com.khantilchoksi.arztdoctor.Utility;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,7 +27,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -35,30 +36,33 @@ import java.util.Map;
  * Created by Khantil on 22-03-2017.
  */
 
-public class GetClinicsTask extends AsyncTask<Void, Void, Boolean> {
+public class InsertClinicTimeSlotTask extends AsyncTask<Void, Void, Boolean> {
 
-    private static final String LOG_TAG = GetClinicsTask.class.getSimpleName();
-    Context context;
-    Activity activity;
-    int mPincode;
-    ArrayList<Clinic> clinicsList;
-    String issue;
-    ProgressDialog progressDialog;
-
-    public interface AsyncResponse {
-        void processFinish(ArrayList<Clinic> clinicsList, ProgressDialog progressDialog);
+    public static void setSetTaskCounts(int setTaskCounts) {
+        InsertClinicTimeSlotTask.setTaskCounts = setTaskCounts;
     }
 
-    public AsyncResponse delegate = null;
+    public static int setTaskCounts = 0;
+    private static int currentTaskCount = 0;
+    private static final String LOG_TAG = InsertClinicTimeSlotTask.class.getSimpleName();
+    Context context;
+    Activity activity;
+    Slot mSlot;
+    String mClinicId;
+    int mFees;
+    ProgressDialog progressDialog;
 
-    public GetClinicsTask(Context context, Activity activity, int pincode, AsyncResponse delegate, ProgressDialog progressDialog){
+
+
+
+    public InsertClinicTimeSlotTask(Context context, Activity activity, String clinicId, Slot slot, int fees,ProgressDialog progressDialog){
         this.context = context;
         this.activity = activity;
-        this.delegate = delegate;
+        this.mClinicId = clinicId;
+        this.mSlot = slot;
+        this.mFees = fees;
         this.progressDialog = progressDialog;
-        this.mPincode = pincode;
-        clinicsList = new ArrayList<Clinic>();
-        issue = context.getResources().getString(R.string.error_unknown_error);
+
     }
 
     @Override
@@ -70,7 +74,7 @@ public class GetClinicsTask extends AsyncTask<Void, Void, Boolean> {
 
         try {
 
-            final String CLIENT_BASE_URL = context.getResources().getString(R.string.base_url).concat("getClinicsFromPin");
+            final String CLIENT_BASE_URL = context.getResources().getString(R.string.base_url).concat("insertClinicTimeSlot");
             URL url = new URL(CLIENT_BASE_URL);
 
 
@@ -84,7 +88,12 @@ public class GetClinicsTask extends AsyncTask<Void, Void, Boolean> {
 
             Uri.Builder builder = new Uri.Builder();
             Map<String, String> parameters = new HashMap<>();
-            parameters.put("pincode", String.valueOf(mPincode));
+            parameters.put("clinicId", mClinicId);
+            parameters.put("doctorId", String.valueOf(Utility.getDoctorId(context)));
+            parameters.put("day",mSlot.getDay());
+            parameters.put("startTime", mSlot.getStartTime());
+            parameters.put("endTime",mSlot.getEndTime());
+            parameters.put("fees",String.valueOf(mFees));
 
             // encode parameters
             Iterator entries = parameters.entrySet().iterator();
@@ -95,13 +104,13 @@ public class GetClinicsTask extends AsyncTask<Void, Void, Boolean> {
             }
             String requestBody = builder.build().getEncodedQuery();
             Log.d(LOG_TAG, "Service Call URL : " + CLIENT_BASE_URL);
-            //Log.d(LOG_TAG, "Post parameters : " + requestBody);
+            Log.d(LOG_TAG, "Post parameters : " + requestBody);
 
             //OutputStream os = urlConnection.getOutputStream();
             OutputStream os = new BufferedOutputStream(urlConnection.getOutputStream());
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
-            writer.write(requestBody);    //bcz no parameters to be sent
+            writer.write(requestBody);
 
             writer.flush();
             writer.close();
@@ -144,10 +153,10 @@ public class GetClinicsTask extends AsyncTask<Void, Void, Boolean> {
 
             clientCredStr = buffer.toString();
 
-            Log.d(LOG_TAG, "Clinics Credential JSON String : " + clientCredStr);
+            Log.d(LOG_TAG, "Insert Clinic Time Slot Credential JSON String : " + clientCredStr);
 
 
-            return getAllClinics(clientCredStr);
+            return isSuccessfullyUpdate(clientCredStr);
 
         } catch (IOException e) {
             Log.d(LOG_TAG, "Error ", e);
@@ -175,81 +184,45 @@ public class GetClinicsTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onCancelled() {
-        progressDialog.dismiss();
-        Toast.makeText(context,issue,Toast.LENGTH_SHORT).show();
-        //go to parent activity remaining
+        //progressDialog.dismiss();
     }
 
     @Override
     protected void onPostExecute(Boolean success) {
         Log.d(LOG_TAG, "Success Boolean Tag: " + success.toString());
         if (success) {
+            //do nothing
+            currentTaskCount++;
+            Log.d(LOG_TAG,"CurrentTaskCount : "+currentTaskCount+" SetTaskCount:"+setTaskCounts);
+            if(currentTaskCount == setTaskCounts){
+                //all done
+                //go to next activity
+                progressDialog.dismiss();
 
-            delegate.processFinish(clinicsList, progressDialog);
+                Intent intent = new Intent(activity,HomeActivity.class);
+                activity.startActivity(intent);
+                activity.finish();
+            }
 
         } else {
 
             progressDialog.dismiss();
 
 
-                /*Snackbar.make(context, issue,
-                        Snackbar.LENGTH_LONG)
-                        .show();*/
-            Toast.makeText(context,issue,Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,context.getResources().getString(R.string.error_unknown_error),Toast.LENGTH_SHORT).show();
 
         }
     }
 
-    private boolean getAllClinics(String clientCredStr) throws JSONException {
+    private boolean isSuccessfullyUpdate(String clientCredStr) throws JSONException {
 
-        //final String isClinicsAvailableString = "clinicsAvailable";
-        final String clinicsListString = "clinicList";
-        final String clinicIdString = "clinicId";
-        final String clinicNameString = "clinicName";
-        final String clinicAddressString = "clinicFullAddress";
-        final String clinicPincodeString = "clinicPostalCode";
-        final String clinicLatitudeString = "clinicLatitude";
-        final String clinicLongitudeString = "clinicLongitude";
-
-        String tempId;
-        String tempName;
-        String tempAddress;
-        String tempPincode;
-        String tempLatitude;
-        String tempLongitude;
-
+        final String successfullyAddedString = "successfullyAdded";
 
         JSONObject clientJson = new JSONObject(clientCredStr);
-
-        JSONArray clinicsJsonArray = clientJson.getJSONArray(clinicsListString);
-        if(clinicsJsonArray.length()>0){
-
-
-            try{
-                for(int i=0;i<clinicsJsonArray.length();i++){
-                    JSONObject clinicJSONObject = clinicsJsonArray.getJSONObject(i);
-                    tempId = clinicJSONObject.getString(clinicIdString);
-                    tempName = clinicJSONObject.getString(clinicNameString);
-                    tempAddress = clinicJSONObject.getString(clinicAddressString);
-                    tempPincode = clinicJSONObject.getString(clinicPincodeString);
-                    tempLatitude = clinicJSONObject.getString(clinicLatitudeString);
-                    tempLongitude = clinicJSONObject.getString(clinicLongitudeString);
-
-                    clinicsList.add(new Clinic(tempId,tempName,tempAddress,Integer.parseInt(tempPincode),
-                            Float.parseFloat(tempLatitude), Float.parseFloat(tempLongitude)));
-
-                    Log.d(LOG_TAG,"ID : "+tempId+"Name: "+tempName+" Address: "+tempAddress+" Pincode: "+
-                            tempPincode+" Latitude: "+tempLatitude+"Longitude: "+tempLongitude);
-                }
-
-                return true;
-            }catch (NumberFormatException e){
-                issue = context.getResources().getString(R.string.error_unknown_error);
-                return false;
-            }
-
-        }else{
-            issue = context.getResources().getString(R.string.no_clinics_available);
+        String successful = clientJson.getString(successfullyAddedString);
+        if(successful.contains("true")){
+            return true;
+        }else {
             return false;
         }
 

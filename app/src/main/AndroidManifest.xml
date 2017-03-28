@@ -74,6 +74,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.khantilchoksi.arztdoctor.AddExistingClinicsActivity" />
         </activity>
+        <activity
+            android:name=".AddClinicTimeSlotsActivity"
+            android:label="@string/title_activity_add_clinic_time_slots"
+            android:parentActivityName=".ShowClinicsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.khantilchoksi.arztdoctor.ShowClinicsActivity" />
+        </activity>
     </application>
 
 </manifest>
