@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ClinicsRecyclerAdapter extends RecyclerView.Adapter<ClinicsRecyclerAdapter.ViewHolder> {
+public class PincodeClinicsRecyclerAdapter extends RecyclerView.Adapter<PincodeClinicsRecyclerAdapter.ViewHolder> {
 
 
     private final String LOG_TAG = getClass().getSimpleName();
@@ -71,7 +71,7 @@ public class ClinicsRecyclerAdapter extends RecyclerView.Adapter<ClinicsRecycler
         }
     }
 
-    public ClinicsRecyclerAdapter(ArrayList<Clinic> clinicsList, Context context, Activity activity) {
+    public PincodeClinicsRecyclerAdapter(ArrayList<Clinic> clinicsList, Context context, Activity activity) {
         this.clinicsList = clinicsList;
         this.mContext = context;
         this.mActivity = activity;

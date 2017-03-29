@@ -79,7 +79,7 @@ public class ShowClinicsActivityFragment extends Fragment implements GetClinicsT
             });
             mNoClinicsAvailableLayout.setVisibility(View.VISIBLE);
         }else{
-            ClinicsRecyclerAdapter clinicsRecyclerAdapter = new ClinicsRecyclerAdapter(clinicsList,getContext(),getActivity());
+            PincodeClinicsRecyclerAdapter clinicsRecyclerAdapter = new PincodeClinicsRecyclerAdapter(clinicsList,getContext(),getActivity());
             mRecyclerView.setAdapter(clinicsRecyclerAdapter);
         }
         progressDialog.dismiss();

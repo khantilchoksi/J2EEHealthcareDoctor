@@ -47,7 +47,7 @@
                 android:text="Clinic 1"
                 android:textSize="18dp"
                 android:textStyle="bold"
-                android:textColor="@color/primary_text"/>
+                android:textColor="@color/colorPrimary"/>
 
             <View
                 android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                         android:gravity="center_vertical|center"
                         android:layout_gravity="center"
                         android:text="Visiting Day"
-                        android:textColor="@color/secondary_text" />
+                        android:textColor="@color/primary_text" />
 
                     <View
                         android:layout_width="1dp"
@@ -108,7 +108,7 @@
                             android:layout_height="wrap_content"
                             android:text="Visiting Hours"
                             android:gravity="center"
-                            android:textColor="@color/secondary_text"/>
+                            android:textColor="@color/primary_text"/>
 
                         <!--View
                             android:layout_width="4dp"
@@ -152,7 +152,7 @@
                         android:layout_weight="1.5"
                         android:gravity="center"
                         android:text="Charges"
-                        android:textColor="@color/secondary_text"/>
+                        android:textColor="@color/primary_text"/>
 
                 </LinearLayout>
 
@@ -185,15 +185,44 @@
                 android:layout_marginTop="2dp"
                 android:background="@color/iron" />
 
-            <TextView
-                android:id="@+id/clinic_address_text_view"
-                android:layout_width="fill_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:padding="8dp"
-                android:text="dsfjfsadlkfsakdlfjklsadjfjsads.fsdklfjsad"
-                android:textSize="14dp"
-                android:textColor="@color/secondary_text"/>
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_address" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/iron" />
+
+                <TextView
+                    android:id="@+id/clinic_address_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:padding="8dp"
+                    android:text="dsfjfsadlkfsakdlfjklsadjfjsads.fsdklfjsad"
+                    android:textSize="14dp"
+                    android:textColor="@color/secondary_text"/>
+
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 

@@ -146,14 +146,14 @@ public class ClinicsFragment extends Fragment implements GetDoctorClinicSlotsTas
 
 
     @Override
-    public void processFinish(ArrayList<Clinic> clinicsList, ArrayList<Slot> slotsList, ProgressDialog progressDialog) {
+    public void processFinish(ArrayList<Clinic> clinicsList, ProgressDialog progressDialog) {
         this.mClinicsList = clinicsList;
-        this.mSlotsList = slotsList;
+
 
         if(mClinicsList.isEmpty()){
             mNoClinicsLinearLayout.setVisibility(View.VISIBLE);
         }else{
-            mClinicsRecyclerAdapter = new ClinicRecyclerAdapter(this.mClinicsList,this.mSlotsList, getContext(), getActivity());
+            mClinicsRecyclerAdapter = new ClinicRecyclerAdapter(this.mClinicsList, getContext(), getActivity());
             mRecyclerView.setAdapter(mClinicsRecyclerAdapter);
         }
         progressDialog.dismiss();

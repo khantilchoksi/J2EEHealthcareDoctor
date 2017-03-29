@@ -29,7 +29,9 @@ public class AddClinicTimeSlotsActivityFragment extends Fragment {
     private final String LOG_TAG = getClass().getSimpleName();
     private RecyclerView mRecyclerView;
     private EditText mConsultancyCostEditText;
+    private EditText mMaxPatientsEditText;
     int mConsultationFees;
+    int mMaxPatients;
     private ProgressDialog progressDialog;
     private ClinicSlotsRecyclerAdapter mClinicsSlotsRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -74,6 +76,8 @@ public class AddClinicTimeSlotsActivityFragment extends Fragment {
 
         mConsultancyCostEditText = (EditText) mRootView.findViewById(R.id.consultation_charges_edit_text);
 
+        mMaxPatientsEditText = (EditText)mRootView.findViewById(R.id.max_patients_edit_text);
+
         final Button saveButton = (Button) mRootView.findViewById(R.id.save_button);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +116,20 @@ public class AddClinicTimeSlotsActivityFragment extends Fragment {
         }
 
 
+        String maxPatientsString = mMaxPatientsEditText.getText().toString();
+        if(maxPatientsString.isEmpty()){
+            valid = false;
+            focusView = mMaxPatientsEditText;
+            mMaxPatientsEditText.setError(getContext().getResources().getString(R.string.error_field_required));
+        }
+        try{
+            mMaxPatients = Integer.parseInt(maxPatientsString);
+        }catch (NumberFormatException e){
+            valid = false;
+            focusView = mMaxPatientsEditText;
+            mMaxPatientsEditText.setError(getContext().getResources().getString(R.string.error_invalid_max_patients));
+        }
+
 
 
 
@@ -130,7 +148,7 @@ public class AddClinicTimeSlotsActivityFragment extends Fragment {
             Slot tempSlot;
             for(int i = 0;i<mClinicsSlotsRecyclerAdapter.getItemCount();i++){
                 tempSlot = mClinicsSlotsRecyclerAdapter.getItemAtPosition(i);
-                new InsertClinicTimeSlotTask(getContext(),getActivity(),mClinicId,tempSlot,mConsultationFees,progressDialog).execute((Void) null);
+                new InsertClinicTimeSlotTask(getContext(),getActivity(),mClinicId,tempSlot,mConsultationFees,mMaxPatients,progressDialog).execute((Void) null);
 
             }
         }

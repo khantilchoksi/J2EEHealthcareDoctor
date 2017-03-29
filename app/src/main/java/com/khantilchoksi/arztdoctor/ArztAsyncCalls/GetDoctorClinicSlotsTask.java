@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.khantilchoksi.arztdoctor.Clinic;
 import com.khantilchoksi.arztdoctor.R;
-import com.khantilchoksi.arztdoctor.Slot;
 import com.khantilchoksi.arztdoctor.Utility;
 
 import org.json.JSONArray;
@@ -43,12 +42,11 @@ public class GetDoctorClinicSlotsTask extends AsyncTask<Void, Void, Boolean> {
     Context context;
     Activity activity;
     ArrayList<Clinic> clinicsList;
-    ArrayList<Slot> slotsList;
 
     ProgressDialog progressDialog;
 
     public interface AsyncResponse {
-        void processFinish(ArrayList<Clinic> clinicsList, ArrayList<Slot> slotsList,ProgressDialog progressDialog);
+        void processFinish(ArrayList<Clinic> clinicsList, ProgressDialog progressDialog);
     }
 
     public AsyncResponse delegate = null;
@@ -59,7 +57,6 @@ public class GetDoctorClinicSlotsTask extends AsyncTask<Void, Void, Boolean> {
         this.delegate = delegate;
         this.progressDialog = progressDialog;
         clinicsList = new ArrayList<Clinic>();
-        slotsList = new ArrayList<Slot>();
 
     }
 
@@ -72,7 +69,7 @@ public class GetDoctorClinicSlotsTask extends AsyncTask<Void, Void, Boolean> {
 
         try {
 
-            final String CLIENT_BASE_URL = context.getResources().getString(R.string.base_url).concat("getClinicSlotsDetails");
+            final String CLIENT_BASE_URL = context.getResources().getString(R.string.base_url).concat("getDoctorClinics");
             URL url = new URL(CLIENT_BASE_URL);
 
 
@@ -185,7 +182,7 @@ public class GetDoctorClinicSlotsTask extends AsyncTask<Void, Void, Boolean> {
         Log.d(LOG_TAG, "Success Boolean Tag: " + success.toString());
         if (success) {
 
-            delegate.processFinish(clinicsList,slotsList,progressDialog);
+            delegate.processFinish(clinicsList,progressDialog);
 
         } else {
 
@@ -203,7 +200,7 @@ public class GetDoctorClinicSlotsTask extends AsyncTask<Void, Void, Boolean> {
     private boolean fetchDoctorClinics(String clientCredStr) throws JSONException {
 
         final String clinicsListString = "clinicList";
-        final String slotsListString = "slotList";
+
 
         final String clinicIdString = "clinicId";
         final String clinicNameString = "clinicName";
@@ -211,12 +208,6 @@ public class GetDoctorClinicSlotsTask extends AsyncTask<Void, Void, Boolean> {
         final String clinicPincodeString = "clinicPincode";
         final String clinicLongitudeString = "clinicLongitude";
         final String clinicLatitudeString = "clinicLatitude";
-
-        final String slotIdString  ="dcId";
-        final String slotDayString = "slotDay";
-        final String slotStartTimeString = "slotStartTime";
-        final String slotEndTimeString = "slotEndTime";
-        final String slotFeesString = "slotFees";
 
 
         String clinicId;
@@ -226,11 +217,6 @@ public class GetDoctorClinicSlotsTask extends AsyncTask<Void, Void, Boolean> {
         float clinicLongitude;
         float clinicLatitude;
 
-        String slotId;
-        String slotDay;
-        String slotStartTime;
-        String slotEndTime;
-        int slotFees;
 
 
         JSONObject clientJson = new JSONObject(clientCredStr);
@@ -255,24 +241,6 @@ public class GetDoctorClinicSlotsTask extends AsyncTask<Void, Void, Boolean> {
             Log.d(LOG_TAG,"Clinic Name: "+clinicName);
 
             clinicsList.add(new Clinic(clinicId,clinicName,clinicAddress,clinicPincode,clinicLatitude,clinicLongitude));
-
-            JSONArray slotsJsonArray = clinicJSONObject.getJSONArray(slotsListString);
-
-            for(int j=0;j<slotsJsonArray.length();j++) {
-                JSONObject slotJSONObject = slotsJsonArray.getJSONObject(j);
-
-                slotId = slotJSONObject.getString(slotIdString);
-                slotDay = slotJSONObject.getString(slotDayString);
-                slotStartTime = slotJSONObject.getString(slotStartTimeString);
-                slotEndTime = slotJSONObject.getString(slotEndTimeString);
-                slotFees = Integer.parseInt(slotJSONObject.getString(slotFeesString));
-
-
-                Log.d(LOG_TAG, "Slot id : "+slotId+"Slot Day: " + slotDay+"Slot Start TIme:"+slotStartTime);
-
-                slotsList.add(new Slot(slotId,slotDay,slotStartTime,slotEndTime,slotFees));
-            }
-
 
         }
 

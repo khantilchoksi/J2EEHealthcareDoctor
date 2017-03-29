@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.khantilchoksi.arztdoctor.ArztAsyncCalls.GetSlotsTask;
+
 import java.util.ArrayList;
 
 /**
@@ -22,7 +24,7 @@ public class ClinicRecyclerAdapter extends RecyclerView.Adapter<ClinicRecyclerAd
     private final String LOG_TAG = getClass().getSimpleName();
 
     private ArrayList<Clinic> mClinicsList;
-    private ArrayList<Slot> mClinicSlotsList;
+
 
     private Context mContext;
     private Activity mActivity;
@@ -76,10 +78,9 @@ public class ClinicRecyclerAdapter extends RecyclerView.Adapter<ClinicRecyclerAd
         }
     }
 
-    public ClinicRecyclerAdapter(ArrayList<Clinic> clinicsList, ArrayList<Slot> clinicSlotsList, Context context,
+    public ClinicRecyclerAdapter(ArrayList<Clinic> clinicsList, Context context,
                                  Activity activity) {
         this.mClinicsList = clinicsList;
-        this.mClinicSlotsList = clinicSlotsList;
         this.mContext = context;
         this.mActivity = activity;
     }
@@ -93,7 +94,7 @@ public class ClinicRecyclerAdapter extends RecyclerView.Adapter<ClinicRecyclerAd
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Log.d(LOG_TAG, "Element " + position + " set.");
 
         // Get element from your dataset at this position and replace the contents of the view
@@ -101,9 +102,18 @@ public class ClinicRecyclerAdapter extends RecyclerView.Adapter<ClinicRecyclerAd
         holder.getClinicNameTextView().setText(mClinicsList.get(position).getClinicName());
         holder.getClinicAddressTextView().setText(mClinicsList.get(position).getClinicAddress());
 
-        SlotsRecyclerAdapter slotsRecyclerAdapter;
-        slotsRecyclerAdapter = new SlotsRecyclerAdapter(mClinicSlotsList,mContext);
-        holder.getSlotsRecyclerView().setAdapter(slotsRecyclerAdapter);
+
+        GetSlotsTask getSlotsTask = new GetSlotsTask(mClinicsList.get(position).getClinicId(), mContext, new GetSlotsTask.AsyncResponse() {
+            @Override
+            public void processSlotFinish(ArrayList<Slot> slotsList) {
+                SlotsRecyclerAdapter slotsRecyclerAdapter;
+                slotsRecyclerAdapter = new SlotsRecyclerAdapter(slotsList,mContext);
+                holder.getSlotsRecyclerView().setAdapter(slotsRecyclerAdapter);
+            }
+        });
+        getSlotsTask.execute((Void) null);
+
+
     }
 
     @Override

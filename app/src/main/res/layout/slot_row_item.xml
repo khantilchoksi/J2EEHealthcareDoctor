@@ -26,7 +26,7 @@
         android:layout_weight="1.5"
         android:gravity="center"
         android:text="Monday"
-        android:textColor="@color/secondary_text"/>
+        android:textColor="@color/secondary_text" />
 
     <View
         android:layout_width="1dp"
@@ -99,6 +99,8 @@
         android:gravity="center"
         android:text="950"
         android:textColor="@color/secondary_text"/>
+
+
 </LinearLayout>
 
     <View

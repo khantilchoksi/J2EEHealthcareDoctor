@@ -222,7 +222,7 @@ public class GetClinicsTask extends AsyncTask<Void, Void, Boolean> {
         JSONObject clientJson = new JSONObject(clientCredStr);
 
         JSONArray clinicsJsonArray = clientJson.getJSONArray(clinicsListString);
-        if(clinicsJsonArray.length()>0){
+        if(clinicsJsonArray != null){
 
 
             try{
