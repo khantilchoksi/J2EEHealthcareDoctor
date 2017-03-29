@@ -1,5 +1,8 @@
 package com.khantilchoksi.arztdoctor;
 
+import android.app.Activity;
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +22,10 @@ public class ClinicRecyclerAdapter extends RecyclerView.Adapter<ClinicRecyclerAd
     private final String LOG_TAG = getClass().getSimpleName();
 
     private ArrayList<Clinic> mClinicsList;
+    private ArrayList<Slot> mClinicSlotsList;
+
+    private Context mContext;
+    private Activity mActivity;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView getClinicNameTextView() {
@@ -35,6 +42,18 @@ public class ClinicRecyclerAdapter extends RecyclerView.Adapter<ClinicRecyclerAd
 
         private final RecyclerView slotsRecyclerView;
 
+        public RecyclerView getSlotsRecyclerView() {
+            return slotsRecyclerView;
+        }
+
+        public RecyclerView.LayoutManager getmLayoutManager() {
+
+            return mLayoutManager;
+        }
+
+
+        private RecyclerView.LayoutManager mLayoutManager;
+
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -49,12 +68,20 @@ public class ClinicRecyclerAdapter extends RecyclerView.Adapter<ClinicRecyclerAd
             clinicNameTextView = (TextView)itemView.findViewById(R.id.clinic_name);
             clinicAddressTextView = (TextView)itemView.findViewById(R.id.clinic_address_text_view);
             slotsRecyclerView = (RecyclerView) itemView.findViewById(R.id.slots_recyclerview);
-            
+
+            mLayoutManager = new LinearLayoutManager(mActivity);
+            slotsRecyclerView.setLayoutManager(mLayoutManager);
+
+
         }
     }
 
-    public ClinicRecyclerAdapter(ArrayList<Clinic> clinicsList) {
+    public ClinicRecyclerAdapter(ArrayList<Clinic> clinicsList, ArrayList<Slot> clinicSlotsList, Context context,
+                                 Activity activity) {
         this.mClinicsList = clinicsList;
+        this.mClinicSlotsList = clinicSlotsList;
+        this.mContext = context;
+        this.mActivity = activity;
     }
 
     @Override
@@ -73,6 +100,10 @@ public class ClinicRecyclerAdapter extends RecyclerView.Adapter<ClinicRecyclerAd
         // with that element
         holder.getClinicNameTextView().setText(mClinicsList.get(position).getClinicName());
         holder.getClinicAddressTextView().setText(mClinicsList.get(position).getClinicAddress());
+
+        SlotsRecyclerAdapter slotsRecyclerAdapter;
+        slotsRecyclerAdapter = new SlotsRecyclerAdapter(mClinicSlotsList,mContext);
+        holder.getSlotsRecyclerView().setAdapter(slotsRecyclerAdapter);
     }
 
     @Override

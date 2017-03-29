@@ -10,8 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-import com.khantilchoksi.arztdoctor.ArztAsyncCalls.GetDoctorMainSpecialitiesTask;
+import com.khantilchoksi.arztdoctor.ArztAsyncCalls.GetDoctorClinicSlotsTask;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  * Use the {@link ClinicsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ClinicsFragment extends Fragment implements GetDoctorMainSpecialitiesTask.AsyncResponse{
+public class ClinicsFragment extends Fragment implements GetDoctorClinicSlotsTask.AsyncResponse{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,11 +32,11 @@ public class ClinicsFragment extends Fragment implements GetDoctorMainSpecialiti
     private String mParam2;
 
     private RecyclerView mRecyclerView;
-    private ClinicRecyclerAdapter mSpecialityAdapter;
+    private ClinicRecyclerAdapter mClinicsRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<String> specialityNamesList;
-    private ArrayList<String> specialityDescriptionList;
-    private ArrayList<String> specialityIconUrlList;
+    private ArrayList<Clinic> mClinicsList;
+    private ArrayList<Slot> mSlotsList;
+    private LinearLayout mNoClinicsLinearLayout;
 
     private ProgressDialog progressDialog;
 
@@ -46,6 +47,12 @@ public class ClinicsFragment extends Fragment implements GetDoctorMainSpecialiti
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         initDataset();
     }
 
@@ -82,11 +89,12 @@ public class ClinicsFragment extends Fragment implements GetDoctorMainSpecialiti
         progressDialog = new ProgressDialog(getActivity(),
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Fetching Doctor Specialities...");
+        progressDialog.setMessage("Fetching Clinics Details...");
         progressDialog.show();
-        GetDoctorMainSpecialitiesTask getDoctorSpecialitiesTask = new GetDoctorMainSpecialitiesTask(getContext(),
+
+        GetDoctorClinicSlotsTask getDoctorClinicSlotsTask = new GetDoctorClinicSlotsTask(getContext(),
                 getActivity(),this,progressDialog);
-        getDoctorSpecialitiesTask.execute((Void) null);
+        getDoctorClinicSlotsTask.execute((Void) null);
 
 
         /*specialityNamesList = new ArrayList<String>();
@@ -123,6 +131,7 @@ public class ClinicsFragment extends Fragment implements GetDoctorMainSpecialiti
         mRecyclerView.setLayoutManager(mLayoutManager);
         //mRecyclerView.scrollToPosition(scrollPosition);
 
+        mNoClinicsLinearLayout = (LinearLayout) rootView.findViewById(R.id.no_clinics_available_layout);
         /*FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.add_clinic_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,20 +144,25 @@ public class ClinicsFragment extends Fragment implements GetDoctorMainSpecialiti
         return rootView;
     }
 
+
     @Override
-    public void processFinish(ArrayList<String> specialityNameList,
-                              ArrayList<String> specialityDescriptionList,
-                              ArrayList<String> specialityIconUrlList,
-                              ProgressDialog progressDialog) {
-        this.specialityNamesList = specialityNameList;
-        this.specialityDescriptionList = specialityDescriptionList;
-        this.specialityIconUrlList = specialityIconUrlList;
+    public void processFinish(ArrayList<Clinic> clinicsList, ArrayList<Slot> slotsList, ProgressDialog progressDialog) {
+        this.mClinicsList = clinicsList;
+        this.mSlotsList = slotsList;
+
+        if(mClinicsList.isEmpty()){
+            mNoClinicsLinearLayout.setVisibility(View.VISIBLE);
+        }else{
+            mClinicsRecyclerAdapter = new ClinicRecyclerAdapter(this.mClinicsList,this.mSlotsList, getContext(), getActivity());
+            mRecyclerView.setAdapter(mClinicsRecyclerAdapter);
+        }
         progressDialog.dismiss();
 
-        mSpecialityAdapter = new ClinicRecyclerAdapter(this.specialityNamesList,this.specialityDescriptionList, this.specialityIconUrlList);
-        // Set CustomAdapter as the adapter for RecyclerView.
-        mRecyclerView.setAdapter(mSpecialityAdapter);
+
     }
+
+
+
 
 
 }

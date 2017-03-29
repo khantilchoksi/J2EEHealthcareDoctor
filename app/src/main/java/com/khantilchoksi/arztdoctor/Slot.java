@@ -21,11 +21,29 @@ public class Slot {
 
     }
 
+    private String slotId;
     private String day = null;
     private int dayIndex = 0;
     private String startTime = null;
     private String endTime = null;
+    private int slotFees;
 
+    public String getSlotId() {
+        return slotId;
+    }
+
+    public int getSlotFees() {
+        return slotFees;
+    }
+
+    public Slot(String slotId, String day, String startTime, String endTime, int slotFees) {
+
+        this.slotId = slotId;
+        this.day = day;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.slotFees = slotFees;
+    }
 
     public void setDay(String day) {
         this.day = day;

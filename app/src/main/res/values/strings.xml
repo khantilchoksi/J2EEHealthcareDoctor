@@ -87,4 +87,5 @@
     <string name="error_add_atleast_one_slot">Please enter at least one slot.</string>
 
     <string name="rupee_symbol">\u20B9</string>
+    <string name="please_add_clinics">Please add clinics!</string>
 </resources>

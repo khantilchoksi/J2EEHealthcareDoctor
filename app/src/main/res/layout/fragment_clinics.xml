@@ -12,6 +12,11 @@
     android:layout_height="match_parent"
     tools:context="com.khantilchoksi.arztdoctor.ClinicsFragment"-->
 
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -22,6 +27,34 @@
         android:scrollbars="vertical"
         android:layout_marginTop="@dimen/activity_horizontal_margin_half"
         android:layout_margin="@dimen/activity_horizontal_margin_half"/>
+
+    <LinearLayout
+        android:id="@+id/no_clinics_available_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/no_clinics_available"
+            android:layout_margin="@dimen/activity_horizontal_margin"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/please_add_clinics"
+            android:layout_margin="@dimen/activity_horizontal_margin"/>
+
+
+    </LinearLayout>
+    </FrameLayout>
 
 
 
