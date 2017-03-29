@@ -3,17 +3,16 @@ package com.khantilchoksi.arztdoctor.ArztAsyncCalls;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.khantilchoksi.arztdoctor.HomeActivity;
+import com.khantilchoksi.arztdoctor.Appointment;
 import com.khantilchoksi.arztdoctor.R;
-import com.khantilchoksi.arztdoctor.Slot;
 import com.khantilchoksi.arztdoctor.Utility;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,8 +26,13 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -36,41 +40,27 @@ import java.util.Map;
  * Created by Khantil on 22-03-2017.
  */
 
-public class InsertClinicTimeSlotTask extends AsyncTask<Void, Void, Boolean> {
+public class GetAppointmentsTask extends AsyncTask<Void, Void, Boolean> {
 
-    public static void setSetTaskCounts(int setTaskCounts) {
-        InsertClinicTimeSlotTask.setTaskCounts = setTaskCounts;
-    }
-
-    public static int setTaskCounts = 0;
-
-    public static void setCurrentTaskCount(int currentTaskCount) {
-        InsertClinicTimeSlotTask.currentTaskCount = currentTaskCount;
-    }
-
-    private static int currentTaskCount = 0;
-    private static final String LOG_TAG = InsertClinicTimeSlotTask.class.getSimpleName();
+    private static final String LOG_TAG = GetAppointmentsTask.class.getSimpleName();
     Context context;
     Activity activity;
-    Slot mSlot;
-    String mClinicId;
-    int mFees;
-    int mMaxPatients;
-    String issue;
+    ArrayList<Appointment> mAppointmetsList;
+
     ProgressDialog progressDialog;
 
+    public interface AsyncResponse {
+        void processFinish(ArrayList<Appointment> appointmentsList, ProgressDialog progressDialog);
+    }
 
+    public AsyncResponse delegate = null;
 
-
-    public InsertClinicTimeSlotTask(Context context, Activity activity, String clinicId, Slot slot, int fees,int maxPatients,ProgressDialog progressDialog){
+    public GetAppointmentsTask(Context context, Activity activity, AsyncResponse asyncResponse, ProgressDialog progressDialog){
         this.context = context;
         this.activity = activity;
-        this.mClinicId = clinicId;
-        this.mSlot = slot;
-        this.mFees = fees;
-        this.mMaxPatients = maxPatients;
+        this.delegate = asyncResponse;
         this.progressDialog = progressDialog;
-        issue = context.getResources().getString(R.string.error_unknown_error);
+        mAppointmetsList = new ArrayList<Appointment>();
 
     }
 
@@ -83,7 +73,7 @@ public class InsertClinicTimeSlotTask extends AsyncTask<Void, Void, Boolean> {
 
         try {
 
-            final String CLIENT_BASE_URL = context.getResources().getString(R.string.base_url).concat("insertClinicTimeSlot");
+            final String CLIENT_BASE_URL = context.getResources().getString(R.string.base_url).concat("getAppointmentsOfPatient");
             URL url = new URL(CLIENT_BASE_URL);
 
 
@@ -97,13 +87,7 @@ public class InsertClinicTimeSlotTask extends AsyncTask<Void, Void, Boolean> {
 
             Uri.Builder builder = new Uri.Builder();
             Map<String, String> parameters = new HashMap<>();
-            parameters.put("clinicId", mClinicId);
             parameters.put("doctorId", String.valueOf(Utility.getDoctorId(context)));
-            parameters.put("day",mSlot.getDay());
-            parameters.put("startTime", mSlot.getStartTime());
-            parameters.put("endTime",mSlot.getEndTime());
-            parameters.put("fees",String.valueOf(mFees));
-            parameters.put("maxPatients",String.valueOf(mMaxPatients));
 
             // encode parameters
             Iterator entries = parameters.entrySet().iterator();
@@ -120,7 +104,7 @@ public class InsertClinicTimeSlotTask extends AsyncTask<Void, Void, Boolean> {
             OutputStream os = new BufferedOutputStream(urlConnection.getOutputStream());
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
-            writer.write(requestBody);
+            writer.write(requestBody);    //bcz no parameters to be sent
 
             writer.flush();
             writer.close();
@@ -163,10 +147,10 @@ public class InsertClinicTimeSlotTask extends AsyncTask<Void, Void, Boolean> {
 
             clientCredStr = buffer.toString();
 
-            Log.d(LOG_TAG, "Insert Clinic Time Slot Credential JSON String : " + clientCredStr);
+            Log.d(LOG_TAG, "Appointments Credential JSON String : " + clientCredStr);
 
 
-            return isSuccessfullyUpdate(clientCredStr);
+            return fetchAppointmentsClinics(clientCredStr);
 
         } catch (IOException e) {
             Log.d(LOG_TAG, "Error ", e);
@@ -194,54 +178,94 @@ public class InsertClinicTimeSlotTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onCancelled() {
-        //progressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     @Override
     protected void onPostExecute(Boolean success) {
         Log.d(LOG_TAG, "Success Boolean Tag: " + success.toString());
         if (success) {
-            //do nothing
-            currentTaskCount++;
-            Log.d(LOG_TAG,"CurrentTaskCount : "+currentTaskCount+" SetTaskCount:"+setTaskCounts);
-            if(currentTaskCount == setTaskCounts){
-                //all done
-                //go to next activity
-                progressDialog.dismiss();
 
-                Intent intent = new Intent(activity,HomeActivity.class);
-                activity.startActivity(intent);
-                activity.finish();
-            }
+            delegate.processFinish(mAppointmetsList,progressDialog);
 
         } else {
 
             progressDialog.dismiss();
 
 
-            Toast.makeText(context,issue,Toast.LENGTH_LONG).show();
-
-            Intent intent = new Intent(activity,HomeActivity.class);
-            activity.startActivity(intent);
-            activity.finish();
+                /*Snackbar.make(, R.string.error_unknown_error,
+                        Snackbar.LENGTH_LONG)
+                        .show();*/
+            Toast.makeText(context,context.getResources().getString(R.string.error_unknown_error),Toast.LENGTH_SHORT).show();
 
         }
     }
 
-    private boolean isSuccessfullyUpdate(String clientCredStr) throws JSONException {
+    private boolean fetchAppointmentsClinics(String clientCredStr) throws JSONException {
 
-        final String successfullyAddedString = "successfullyAdded";
-        final String errorMessageString = "errorMessage";
+        final String appointmentListString = "appointmentList";
+
+
+        final String appointmentIdString = "appointmentId";
+        final String patientNameString = "patientName";
+        final String clinicNameString = "clinicName";
+        final String appointmentDateString = "appointmentDate";
+        final String appointmentDayString = "appointmentDay";
+        final String appointmentStartTimeString = "appointmentStartTime";
+        final String appointmentEndTimeString = "appointmentEndTime";
+
+
+        String appointmentId;
+        String patientName;
+        String clinicName;
+        String appointmentDate;
+        String appointmentDay;
+        String appointmentStartTime;
+        String appointmentEndTime;
 
         JSONObject clientJson = new JSONObject(clientCredStr);
-        String successful = clientJson.getString(successfullyAddedString);
-        if(successful.contains("true")){
+
+        JSONArray appointmentsJsonArray = clientJson.getJSONArray(appointmentListString);
+
+        if(appointmentsJsonArray != null) {
+
+            for (int i = 0; i < appointmentsJsonArray.length(); i++) {
+                JSONObject appointmentJSONObject = appointmentsJsonArray.getJSONObject(i);
+
+                appointmentId = appointmentJSONObject.getString(appointmentIdString);
+                patientName = appointmentJSONObject.getString(patientNameString);
+                clinicName = appointmentJSONObject.getString(clinicNameString);
+                appointmentDate = appointmentJSONObject.getString(appointmentDateString);
+                appointmentDay = appointmentJSONObject.getString(appointmentDayString);
+                appointmentStartTime = appointmentJSONObject.getString(appointmentStartTimeString);
+                appointmentEndTime = appointmentJSONObject.getString(appointmentEndTimeString);
+
+                Log.d(LOG_TAG, "Appointment Id: " + appointmentId);
+
+                String myFormat = "yyyy-MM-dd"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                try {
+                    Calendar myCalendar = Calendar.getInstance();
+                    myCalendar.setTime(sdf.parse(appointmentDate));
+
+                    String myFormat2 = "MMMM dd, yyyy"; //In which you need put here
+                    SimpleDateFormat sdf2 = new SimpleDateFormat(myFormat2, Locale.US);
+
+                    appointmentDate = sdf2.format(myCalendar.getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                mAppointmetsList.add(new Appointment(appointmentId,patientName,appointmentDate,
+                        appointmentDay,appointmentStartTime,appointmentEndTime,clinicName));
+            }
+
             return true;
-        }else {
-            issue = clientJson.getString(errorMessageString);
-            return false;
         }
 
+
+
+        return false;
     }
 
 

@@ -145,6 +145,7 @@ public class AddClinicTimeSlotsActivityFragment extends Fragment {
             progressDialog.show();
             Log.d(LOG_TAG,"Set Task Count form Activity: "+mClinicsSlotsRecyclerAdapter.getItemCount());
             InsertClinicTimeSlotTask.setSetTaskCounts(mClinicsSlotsRecyclerAdapter.getItemCount());
+            InsertClinicTimeSlotTask.setCurrentTaskCount(0);
             Slot tempSlot;
             for(int i = 0;i<mClinicsSlotsRecyclerAdapter.getItemCount();i++){
                 tempSlot = mClinicsSlotsRecyclerAdapter.getItemAtPosition(i);

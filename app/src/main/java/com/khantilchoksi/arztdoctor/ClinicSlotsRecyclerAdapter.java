@@ -223,7 +223,7 @@ public class ClinicSlotsRecyclerAdapter extends RecyclerView.Adapter<ClinicSlots
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
         //holder.getClinicNameTextView().setText(clinicsList.get(position).getClinicName());
-        //holder.getClinicAddressTextView().setText(clinicsList.get(position).getClinicAddress());
+        //holder.getClinicNameTextView().setText(clinicsList.get(position).getClinicAddress());
     }
 
     @Override

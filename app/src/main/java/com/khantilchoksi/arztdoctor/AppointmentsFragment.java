@@ -1,11 +1,19 @@
 package com.khantilchoksi.arztdoctor;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import com.khantilchoksi.arztdoctor.ArztAsyncCalls.GetAppointmentsTask;
+
+import java.util.ArrayList;
 
 
 /**
@@ -13,7 +21,7 @@ import android.view.ViewGroup;
  * Use the {@link AppointmentsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AppointmentsFragment extends Fragment {
+public class AppointmentsFragment extends Fragment implements GetAppointmentsTask.AsyncResponse{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -23,6 +31,20 @@ public class AppointmentsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private View mRootview;
+    private RecyclerView mRecyclerView;
+    private AppointmentsAdapter mAppointmentAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<Appointment> mAppointmentsList;
+    private LinearLayout mNoAppointmentsLinearLayout;
+
+    private ProgressDialog progressDialog;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initDataset();
+    }
 
     public AppointmentsFragment() {
         // Required empty public constructor
@@ -59,7 +81,40 @@ public class AppointmentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_appointments, container, false);
+        mRootview = inflater.inflate(R.layout.fragment_appointments, container, false);
+
+        mNoAppointmentsLinearLayout = (LinearLayout) mRootview.findViewById(R.id.no_appointments_available_layout);
+
+        mRecyclerView = (RecyclerView) mRootview.findViewById(R.id.appointments_recyclerview);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        return mRootview;
     }
 
+    private void initDataset() {
+        progressDialog = new ProgressDialog(getActivity(),
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Fetching Appointments...");
+        progressDialog.show();
+
+        GetAppointmentsTask getAppointmentsTask = new GetAppointmentsTask(getContext(),
+                getActivity(),this,progressDialog);
+        getAppointmentsTask.execute((Void) null);
+    }
+
+    @Override
+    public void processFinish(ArrayList<Appointment> appointmentsList, ProgressDialog progressDialog) {
+        this.mAppointmentsList = appointmentsList;
+
+
+        if(mAppointmentsList.isEmpty()){
+            mNoAppointmentsLinearLayout.setVisibility(View.VISIBLE);
+        }else{
+            mAppointmentAdapter = new AppointmentsAdapter(this.mAppointmentsList, getActivity());
+            mRecyclerView.setAdapter(mAppointmentAdapter);
+        }
+        progressDialog.dismiss();
+    }
 }

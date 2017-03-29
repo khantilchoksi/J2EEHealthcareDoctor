@@ -91,4 +91,5 @@
     <string name="button_book">Book</string>
     <string name="prompt_max_patients">Max Patients</string>
     <string name="error_invalid_max_patients">Enter Valid Value!</string>
+    <string name="no_appointments_avaliable">You don\'t have any upcoming appointments.</string>
 </resources>
