@@ -92,4 +92,6 @@
     <string name="prompt_max_patients">Max Patients</string>
     <string name="error_invalid_max_patients">Enter Valid Value!</string>
     <string name="no_appointments_avaliable">You don\'t have any upcoming appointments.</string>
+    <string name="cancel_appointment">Cancel</string>
+    <string name="edit">Edit</string>
 </resources>

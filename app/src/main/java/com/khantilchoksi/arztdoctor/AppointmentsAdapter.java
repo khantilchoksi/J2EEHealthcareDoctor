@@ -1,12 +1,16 @@
 package com.khantilchoksi.arztdoctor;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.khantilchoksi.arztdoctor.ArztAsyncCalls.CancelAppointmentTask;
 
 import java.util.ArrayList;
 
@@ -31,6 +35,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
         private final TextView appointmentStartTimeTextView;
         private final TextView appointmentEndTimeTextView;
         private final TextView clinicNameTextView;
+        private final Button cancelAppointmentButton;
 
         public TextView getPatientNameTextView() {
             return patientNameTextView;
@@ -59,6 +64,22 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
         public ViewHolder(View itemView) {
             super(itemView);
 
+            cancelAppointmentButton = (Button) itemView.findViewById(R.id.cancel_appointment_button);
+            cancelAppointmentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ProgressDialog progressDialog;
+                    progressDialog = new ProgressDialog(mActivity,
+                            R.style.AppTheme_Dark_Dialog);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setMessage("Cancelling Appointment...");
+                    progressDialog.show();
+                    CancelAppointmentTask cancelAppointmentTask =
+                            new CancelAppointmentTask(mAppointmentsList.get(getAdapterPosition()).getAppointmentId(),
+                                    mActivity.getApplicationContext(),mActivity,progressDialog);
+                    cancelAppointmentTask.execute((Void) null);
+                }
+            });
             /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
