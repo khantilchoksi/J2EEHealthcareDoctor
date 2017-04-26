@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Arzt Partner</string>
+    <string name="app_name">CSA Arzt Partner</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -52,8 +52,8 @@
         completions."
     </string>
 
-    <string name="base_url">https://testarzt.herokuapp.com/api/</string>
-    <string name="doc_specialtiybase_url"> https://testarzt.herokuapp.com/assets/images/specimg/</string>
+    <string name="base_url">https://arzt.herokuapp.com/api/</string>
+    <string name="doc_specialtiybase_url"> https://arzt.herokuapp.com/assets/images/specimg/</string>
     <string name="login_pref">MyLoginPref</string>
 
     <string name="indian_country_code">+91</string>

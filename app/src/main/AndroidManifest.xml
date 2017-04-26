@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.khantilchoksi.arztdoctor">
+    package="com.khantilchoksi.j2eehealthcaredoctor">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -24,12 +24,12 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.khantilchoksi.j2eehealthcaredoctor.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.khantilchoksi.j2eehealthcaredoctor.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
@@ -39,49 +39,49 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.khantilchoksi.j2eehealthcaredoctor.RegisterActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Dark" />
         <activity
-            android:name=".MyProfileActivity"
+            android:name="com.khantilchoksi.j2eehealthcaredoctor.MyProfileActivity"
             android:label="@string/title_activity_my_profile"
             android:launchMode="singleTop"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName="com.khantilchoksi.j2eehealthcaredoctor.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".HomeActivity"
+            android:name="com.khantilchoksi.j2eehealthcaredoctor.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddExistingClinicsActivity"
+            android:name="com.khantilchoksi.j2eehealthcaredoctor.AddExistingClinicsActivity"
             android:label="@string/title_activity_add_existing_clinics"
             android:launchMode="singleTop"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName="com.khantilchoksi.j2eehealthcaredoctor.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.khantilchoksi.arztdoctor.HomeActivity" />
+                android:value="com.khantilchoksi.j2eehealthcaredoctor.HomeActivity" />
         </activity>
         <activity
-            android:name=".ShowClinicsActivity"
+            android:name="com.khantilchoksi.j2eehealthcaredoctor.ShowClinicsActivity"
             android:label="@string/title_activity_show_clinics"
-            android:parentActivityName=".AddExistingClinicsActivity"
+            android:parentActivityName="com.khantilchoksi.j2eehealthcaredoctor.AddExistingClinicsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.khantilchoksi.arztdoctor.AddExistingClinicsActivity" />
+                android:value="com.khantilchoksi.j2eehealthcaredoctor.AddExistingClinicsActivity" />
         </activity>
         <activity
-            android:name=".AddClinicTimeSlotsActivity"
+            android:name="com.khantilchoksi.j2eehealthcaredoctor.AddClinicTimeSlotsActivity"
             android:label="@string/title_activity_add_clinic_time_slots"
-            android:parentActivityName=".ShowClinicsActivity"
+            android:parentActivityName="com.khantilchoksi.j2eehealthcaredoctor.ShowClinicsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.khantilchoksi.arztdoctor.ShowClinicsActivity" />
+                android:value="com.khantilchoksi.j2eehealthcaredoctor.ShowClinicsActivity" />
         </activity>
     </application>
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.khantilchoksi.arztdoctor.ProfileFragment">
+    tools:context="com.khantilchoksi.j2eehealthcaredoctor.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -262,7 +262,7 @@
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_address" />
 
-            <com.khantilchoksi.arztdoctor.MultiSelectionSpinner
+            <com.khantilchoksi.j2eehealthcaredoctor.MultiSelectionSpinner
                 android:id="@+id/degreeSpinner"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -295,7 +295,7 @@
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_address" />
 
-            <com.khantilchoksi.arztdoctor.MultiSelectionSpinner
+            <com.khantilchoksi.j2eehealthcaredoctor.MultiSelectionSpinner
                 android:id="@+id/speciality_spinner"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

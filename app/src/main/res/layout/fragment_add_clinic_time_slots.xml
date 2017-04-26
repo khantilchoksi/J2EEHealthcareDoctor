@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="fill_vertical"
-    tools:context="com.khantilchoksi.arztdoctor.AddClinicTimeSlotsActivityFragment"
+    tools:context="com.khantilchoksi.j2eehealthcaredoctor.AddClinicTimeSlotsActivityFragment"
     tools:showIn="@layout/activity_add_clinic_time_slots">
 
 
