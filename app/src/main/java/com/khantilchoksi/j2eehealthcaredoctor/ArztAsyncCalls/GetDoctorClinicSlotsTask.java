@@ -83,6 +83,7 @@ public class GetDoctorClinicSlotsTask extends AsyncTask<Void, Void, Boolean> {
 
             Uri.Builder builder = new Uri.Builder();
             Map<String, String> parameters = new HashMap<>();
+            parameters.put("authKey", "avk");
             parameters.put("doctorId", String.valueOf(Utility.getDoctorId(context)));
 
             // encode parameters

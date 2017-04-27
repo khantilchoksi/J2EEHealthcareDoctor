@@ -377,6 +377,7 @@ public class LoginActivity extends AppCompatActivity{
 
                 Uri.Builder builder = new Uri.Builder();
                 Map<String, String> parameters = new HashMap<>();
+                parameters.put("authKey", "avk");
                 parameters.put("mobile", mMobile);
                 parameters.put("password", mPassword);
 

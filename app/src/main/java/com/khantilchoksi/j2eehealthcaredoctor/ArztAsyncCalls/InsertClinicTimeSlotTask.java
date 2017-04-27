@@ -97,6 +97,7 @@ public class InsertClinicTimeSlotTask extends AsyncTask<Void, Void, Boolean> {
 
             Uri.Builder builder = new Uri.Builder();
             Map<String, String> parameters = new HashMap<>();
+            parameters.put("authKey", "avk");
             parameters.put("clinicId", mClinicId);
             parameters.put("doctorId", String.valueOf(Utility.getDoctorId(context)));
             parameters.put("day",mSlot.getDay());

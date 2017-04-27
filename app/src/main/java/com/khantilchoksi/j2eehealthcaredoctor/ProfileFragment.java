@@ -43,12 +43,15 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.khantilchoksi.j2eehealthcaredoctor.ArztAsyncCalls.GetDoctorMainSpecialitiesTask;
+import com.khantilchoksi.j2eehealthcaredoctor.ArztAsyncCalls.GetDoctorQualitficationsTask;
 import com.khantilchoksi.j2eehealthcaredoctor.ArztAsyncCalls.GetPatientProfileTask;
 import com.khantilchoksi.j2eehealthcaredoctor.ArztAsyncCalls.SavePatientProfileTask;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -62,7 +65,7 @@ import java.util.Locale;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment implements MultiSelectionSpinner.OnMultipleItemsSelectedListener,GetPatientProfileTask.AsyncResponse,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class ProfileFragment extends Fragment implements GetPatientProfileTask.AsyncResponse,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GetDoctorQualitficationsTask.AsyncResponse, GetDoctorMainSpecialitiesTask.AsyncResponse{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -349,31 +352,18 @@ public class ProfileFragment extends Fragment implements MultiSelectionSpinner.O
     }
 
     private void setUpDegreeSpinner(){
-        String[] array = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
-        MultiSelectionSpinner multiSelectionSpinner = (MultiSelectionSpinner) mRootView.findViewById(R.id.degreeSpinner);
-        multiSelectionSpinner.setSpinnerTitle("Select Degrees");
-        multiSelectionSpinner.setItems(array);
-        multiSelectionSpinner.setSelection(new int[]{2, 6});
-        multiSelectionSpinner.setListener(this);
+        GetDoctorQualitficationsTask getDoctorQualitficationsTask = new GetDoctorQualitficationsTask(getContext(),
+                getActivity(),this);
+        getDoctorQualitficationsTask.execute((Void) null);
+
+
     }
 
     private void setUpSpecialitySpinner(){
-        String[] array = {"Ontology", "Physician", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
-        MultiSelectionSpinner multiSelectionSpinner = (MultiSelectionSpinner) mRootView.findViewById(R.id.speciality_spinner);
-        multiSelectionSpinner.setSpinnerTitle("Select Your Specialities");
-        multiSelectionSpinner.setItems(array);
-        multiSelectionSpinner.setSelection(new int[]{2, 6});
-        multiSelectionSpinner.setListener(new MultiSelectionSpinner.OnMultipleItemsSelectedListener() {
-            @Override
-            public void selectedIndices(List<Integer> indices) {
+        GetDoctorMainSpecialitiesTask getDoctorMainSpecialitiesTask = new GetDoctorMainSpecialitiesTask(getContext(),
+                getActivity(),this);
+        getDoctorMainSpecialitiesTask.execute((Void) null);
 
-            }
-
-            @Override
-            public void selectedStrings(List<String> strings) {
-                Toast.makeText(getContext(), "Heya"+strings.toString(), Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     /*private void setUpCitySpinner(){
@@ -715,14 +705,48 @@ public class ProfileFragment extends Fragment implements MultiSelectionSpinner.O
         }
     }
 
-    @Override
-    public void selectedIndices(List<Integer> indices) {
 
+    @Override
+    public void processDoctorQualificationFinish(ArrayList<Integer> qualificationIdList, ArrayList<String> qualificationNameList) {
+        //doctor qualifications
+        //String[] array = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
+        MultiSelectionSpinner multiSelectionSpinner = (MultiSelectionSpinner) mRootView.findViewById(R.id.degreeSpinner);
+        multiSelectionSpinner.setSpinnerTitle("Select Degrees");
+        multiSelectionSpinner.setItems(qualificationNameList);
+        multiSelectionSpinner.setSelection(new int[]{2, 6});
+        multiSelectionSpinner.setListener(new MultiSelectionSpinner.OnMultipleItemsSelectedListener() {
+            @Override
+            public void selectedIndices(List<Integer> indices) {
+
+            }
+
+            @Override
+            public void selectedStrings(List<String> strings) {
+                Toast.makeText(getContext(), strings.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "Heya"+strings.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
-    public void selectedStrings(List<String> strings) {
-        Toast.makeText(getContext(), strings.toString(), Toast.LENGTH_LONG).show();
+    public void processSpecialityFinish(ArrayList<String> specialityIdList, ArrayList<String> specialityNameList, ArrayList<String> specialityDescriptionList, ArrayList<String> specialityIconUrlList) {
+        //String[] array = {"Ontology", "Physician", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
+        MultiSelectionSpinner multiSelectionSpinner = (MultiSelectionSpinner) mRootView.findViewById(R.id.speciality_spinner);
+        multiSelectionSpinner.setSpinnerTitle("Select Your Specialities");
+        multiSelectionSpinner.setItems(specialityNameList);
+        multiSelectionSpinner.setSelection(new int[]{5, 6});
+        multiSelectionSpinner.setListener(new MultiSelectionSpinner.OnMultipleItemsSelectedListener() {
+            @Override
+            public void selectedIndices(List<Integer> indices) {
+
+            }
+
+            @Override
+            public void selectedStrings(List<String> strings) {
+                Toast.makeText(getContext(), strings.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "Heya"+strings.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 

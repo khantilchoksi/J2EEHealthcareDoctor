@@ -84,6 +84,7 @@ public class GetClinicsTask extends AsyncTask<Void, Void, Boolean> {
 
             Uri.Builder builder = new Uri.Builder();
             Map<String, String> parameters = new HashMap<>();
+            parameters.put("authKey", "avk");
             parameters.put("pincode", String.valueOf(mPincode));
 
             // encode parameters

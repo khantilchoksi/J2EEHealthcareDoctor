@@ -263,6 +263,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 Uri.Builder builder = new Uri.Builder();
                 Map<String, String> parameters = new HashMap<>();
+                parameters.put("authKey", "avk");
                 parameters.put("user_name", mName);
                 parameters.put("primary_mobile", mMobile);
                 parameters.put("email_id", mEmail);
