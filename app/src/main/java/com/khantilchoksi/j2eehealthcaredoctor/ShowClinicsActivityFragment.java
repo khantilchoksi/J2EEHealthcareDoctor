@@ -56,7 +56,7 @@ public class ShowClinicsActivityFragment extends Fragment implements GetClinicsT
         progressDialog = new ProgressDialog(getActivity(),
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Saving Profile Info...");
+        progressDialog.setMessage("Fetching Clinics...");
         progressDialog.show();
 
         GetClinicsTask getClinicsTask = new GetClinicsTask(getContext(),getActivity(),mPincode,this,progressDialog);

@@ -72,14 +72,14 @@
 
 
     <item name="prompt_blood_group" type="id">Choose Blood Group</item>
-    <string name="title_activity_home">Arzt</string>
+    <string name="title_activity_home">Arzt Partner</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="profile_updated">Profile Details Updated!</string>
-    <string name="title_activity_add_existing_clinics">AddExistingClinicsActivity</string>
+    <string name="title_activity_add_existing_clinics">Search Clinics</string>
     <string name="error_invalid_pincode">Please enter valid pincode.</string>
-    <string name="title_activity_show_clinics">ShowClinicsActivity</string>
+    <string name="title_activity_show_clinics">Clinics</string>
     <string name="request_to_add_clinic">Add Your Own New Clinic!</string>
-    <string name="title_activity_add_clinic_time_slots">AddClinicTimeSlotsActivity</string>
+    <string name="title_activity_add_clinic_time_slots">Add Your Time Slots</string>
     <string name="bundle_clinic_id">bundleClinicId</string>
     <string name="bundle_clinic_name">bundleClinicName</string>
     <string name="prompt_consultation_charges">Consultation Fees</string>

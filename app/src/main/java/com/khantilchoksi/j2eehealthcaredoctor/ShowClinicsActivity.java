@@ -20,8 +20,8 @@ public class ShowClinicsActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        });*/
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }

@@ -36,10 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:text="Clinic Name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/primary_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorPrimary"
             app:layout_constraintLeft_toRightOf="@+id/clinic_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
